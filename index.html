@@ -3,9 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello WorldZZZZZ</title>
+    <title>Number Tester</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 32px;
+        }
+        .input-container {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+        }
+        a {
+            display: block;
+            margin-top: 10px;
+            font-size: 18px;
+            text-decoration: none;
+            color: blue;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, Worldzz!</h1>
+    <h1>Enter number here</h1>
+    <div class="input-container">
+        <input type="text" id="numberInput" placeholder="Enter 10-digit number" maxlength="10">
+        <a href="#" onclick="submitNumber()">Submit</a>
+    </div>
+
+    <script>
+        function submitNumber() {
+            var input = document.getElementById('numberInput');
+            var number = input.value;
+            if (number.length === 10 && !isNaN(number)) {
+                alert('Number entered: ' + number);
+                input.value = '';
+            } else {
+                alert('Please enter a valid 10-digit number.');
+            }
+        }
+    </script>
 </body>
-</html>  
+</html>

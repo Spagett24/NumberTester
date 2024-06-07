@@ -45,7 +45,7 @@
             var input = document.getElementById('numberInput');
             var number = input.value;
             if (number.length === 10 && !isNaN(number)) {
-                alert('Number entered: ' + number);
+                // Number is valid, reset the input
                 input.value = '';
             } else {
                 alert('Please enter a valid 10-digit number.');

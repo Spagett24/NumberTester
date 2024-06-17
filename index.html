@@ -24,12 +24,11 @@
             font-size: 16px;
             width: 200px;
         }
-        a {
-            display: block;
+        button {
             margin-top: 10px;
             font-size: 18px;
-            text-decoration: none;
-            color: blue;
+            padding: 10px 20px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -37,16 +36,32 @@
     <h1>Enter number here</h1>
     <div class="input-container">
         <input type="text" id="numberInput" placeholder="Enter 10-digit number" maxlength="10" onkeypress="checkEnter(event)">
-        <a href="#" onclick="submitNumber()">Submit</a>
+        <button onclick="submitNumber()">Submit</button>
     </div>
 
     <script>
         function submitNumber() {
             var input = document.getElementById('numberInput');
             var number = input.value;
+
             if (number.length === 10 && !isNaN(number)) {
-                // Number is valid, reset the input
-                input.value = '';
+                fetch('http://127.0.0.1:5000/submit-number', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ number: number })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        input.value = '';
+                    } else if (data.error) {
+                        alert(data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
             } else {
                 alert('Please enter a valid 10-digit number.');
             }

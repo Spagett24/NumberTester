@@ -4,7 +4,6 @@
         var number = input.value;
 
         if (number.length === 10 && !isNaN(number)) {
-            console.log("Sending request:", number); // Add debug print
             fetch('http://127.0.0.1:5000/submit-number', {
                 method: 'POST',
                 headers: {
@@ -14,7 +13,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log("Response received:", data); // Add debug print
                 if (data.message) {
                     alert(data.message);
                     input.value = '';

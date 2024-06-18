@@ -33,43 +33,47 @@
     </style>
 </head>
 <body>
-    <h1>Enter number here</h1>
+    <h1>Enter details here</h1>
     <div class="input-container">
+        <input type="text" id="nameInput" placeholder="Enter your name" maxlength="50">
         <input type="text" id="numberInput" placeholder="Enter 10-digit number" maxlength="10" onkeypress="checkEnter(event)">
-        <button onclick="submitNumber()">Submit</button>
+        <button onclick="submitDetails()">Submit</button>
     </div>
 
     <script>
-        function submitNumber() {
-            var input = document.getElementById('numberInput');
-            var number = input.value;
+        function submitDetails() {
+            var nameInput = document.getElementById('nameInput');
+            var numberInput = document.getElementById('numberInput');
+            var name = nameInput.value;
+            var number = numberInput.value;
 
-            if (number.length === 10 && !isNaN(number)) {
-                fetch('http://127.0.0.1:5000/submit-number', {
+            if (name && number.length === 10 && !isNaN(number)) {
+                fetch('http://127.0.0.1:5000/submit-details', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ number: number })
+                    body: JSON.stringify({ name: name, number: number })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.message) {
                         alert(data.message);
-                        input.value = '';
+                        nameInput.value = '';
+                        numberInput.value = '';
                     } else if (data.error) {
                         alert(data.error);
                     }
                 })
                 .catch(error => console.error('Error:', error));
             } else {
-                alert('Please enter a valid 10-digit number.');
+                alert('Please enter a valid name and 10-digit number.');
             }
         }
 
         function checkEnter(event) {
             if (event.key === 'Enter') {
-                submitNumber();
+                submitDetails();
             }
         }
     </script>
